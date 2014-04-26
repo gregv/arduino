@@ -10,6 +10,6 @@
 - XBee Explorer Regulated (for use with PC) - WRL-09132 - $9.95 - https://www.sparkfun.com/products/9132
 - XBee Explorer Dongle (for use with above) - WRL-09819 - $24.95 - https://www.sparkfun.com/products/9819
 
-![](./images/CircuitWiring_1.jpg =550x)
-![](./images/CircuitWiring_2.jpg =550x)
-![](./images/Schematic.jpg =550x)
+![](https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/CircuitWiring_1.jpg =550x)
+![](https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/CircuitWiring_2.jpg =550x)
+![](https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/Schematic.jpg =550x)
