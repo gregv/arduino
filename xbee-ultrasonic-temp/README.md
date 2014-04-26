@@ -11,6 +11,7 @@ Arduino Uno + XBee + Ultrasonic Sensor + Temp Sensor
 - XBee Explorer Regulated (for use with PC) - WRL-09132 - $9.95 - https://www.sparkfun.com/products/9132
 - XBee Explorer Dongle (for use with above) - WRL-09819 - $24.95 - https://www.sparkfun.com/products/9819
 
-<img src="https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/CircuitWiring_1.jpg" width="400"/>
 <img src="https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/CircuitWiring_2.jpg" width="400"/>
+<br/>
+<img src="https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/CircuitWiring_1.jpg" width="400"/>
 <img src="https://raw.githubusercontent.com/gregv/arduino/master/xbee-ultrasonic-temp/images/Schematic.jpg" width="400"/>
