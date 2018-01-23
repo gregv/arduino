@@ -1,20 +1,30 @@
-#include <Servo.h> 
+#include <JeeLib.h> // Low power functions library
+
+ISR(WDT_vect) { Sleepy::watchdogEvent(); } // Setup the watchdog
+
+
+// Arduino Uno (135mA) 0.135A servo on, 35mA (0.035A) sleeping
+// Arduino Mini Pro: 0.135A servo on, 0.005A (5mA) sleeping, 0.035A awake
+// At 2.8Ah for the batteries, running at 5mA, this should last 560 hours (23.3 days)
+// http://referencedesigner.com/cal/cal_54.php
 
 int DAY_TIME = 700; // this number or greater is considered bright daytime
-int NIGHT_TIME = 200; // this number or less is considered dark/night
+int NIGHT_TIME = 210; // this number or less is considered dark/night
 
 // Analog
-int LDR_Pin = A0; //analog pin 0
+int LDR_Pin = A0; //analog pin 0 - Photo Resistor
 boolean isOpen = false; // starts closed - assume blinds are closed becayse its bright/daytime
 
 // Digital
-int myLed = 9; // out
-Servo myMotor;
+int myLed = LED_BUILTIN; // out
+int servoPin = 12;
 
 void setup() {
   pinMode(myLed, OUTPUT);
+  pinMode(servoPin, OUTPUT);
+  
   Serial.begin(9600);
-  delay(5000);
+  delay(5000);  
 }
 
 
@@ -36,11 +46,19 @@ void closeBlinds()
 {
   if( isOpen )
   {
+    Serial.println("Closing Blinds");
     // We attach here so the motor isn't used when we don't need to use it
-    myMotor.attach(12);
-    myMotor.write(0);
-    delay(5000);
-    myMotor.detach();
+    // http://www.bajdi.com/continuous-rotation-servos-and-arduino/
+    // 90 = Stop, Lower than 90 is counter-clockwise, larger than 90 is clockwise
+
+    for (int i = 0; i<=750; i++) 
+    { 
+      digitalWrite(servoPin, LOW); 
+      delay(1.25);             
+      digitalWrite(servoPin, HIGH); 
+      delay(18.75);            
+    } 
+
     isOpen = false;
   }
 }
@@ -49,10 +67,14 @@ void openBlinds()
 {
   if( !isOpen ) 
   {    
-    myMotor.attach(12);
-    myMotor.write(280);
-    delay(5000);
-    myMotor.detach();
+    Serial.println("Opening Blinds");
+    for (int i = 0; i<=500; i++) 
+    { 
+      digitalWrite(servoPin, HIGH); 
+      delay(1.25); 
+      digitalWrite(servoPin, LOW); 
+      delay(18.75); 
+    } 
     isOpen = true;
   }
 }
@@ -61,15 +83,16 @@ void loop() {
   int LDRReading = analogRead(LDR_Pin); 
   Serial.println(LDRReading);
   
+
   if( LDRReading > DAY_TIME )
-  {
-    flashLed(myLed, 7, 200);
-    closeBlinds();
+  {        
+    closeBlinds();        
   }
   else if( LDRReading < NIGHT_TIME )
-  {
-    flashLed(myLed, 1, 800);
-    openBlinds();
+  {      
+    openBlinds(); 
   }
-  
+
+  flashLed(myLed, 1, 300);
+  Sleepy::loseSomeTime(15000);
 }
